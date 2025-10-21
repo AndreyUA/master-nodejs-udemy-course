@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 
 const reqListener = (req, res) => {
   //   console.log("req >> ", req);
@@ -6,8 +7,10 @@ const reqListener = (req, res) => {
   // process.exit(); to stop node.js code execution manually
 
   const url = req.url;
+  const method = req.method;
 
-  res.setHeader("Content-Type", "text/html");
+  console.log("🚀 ~ reqListener ~ url:", url);
+  console.log("🚀 ~ reqListener ~ method:", method);
 
   if (url === "/") {
     res.write("<html>");
@@ -19,6 +22,14 @@ const reqListener = (req, res) => {
     return res.end();
   }
 
+  if (url === "/message" && method === "POST") {
+    fs.writeFileSync("message.txt", "TEST TEXT");
+    res.status = 302;
+    res.setHeader("Location", "/");
+    return res.end();
+  }
+
+  res.setHeader("Content-Type", "text/html");
   res.write("<html>");
   res.write("<head><title>My first page</title></head>");
   res.write("<body><h1>Hello from node.js!</h1></body>");
