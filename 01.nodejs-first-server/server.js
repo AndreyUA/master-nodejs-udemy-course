@@ -2,15 +2,8 @@ const http = require("http");
 const fs = require("fs");
 
 const reqListener = (req, res) => {
-  //   console.log("req >> ", req);
-  //   console.log("req >> ", req.url, req.headers);
-  // process.exit(); to stop node.js code execution manually
-
   const url = req.url;
   const method = req.method;
-
-  console.log("🚀 ~ reqListener ~ url:", url);
-  console.log("🚀 ~ reqListener ~ method:", method);
 
   if (url === "/") {
     res.write("<html>");
@@ -19,13 +12,14 @@ const reqListener = (req, res) => {
       "<body><form action='/message' method='POST'><input type='text' name='message'><button type='submit'>Send</button></form></body>"
     );
     res.write("</html>");
+
     return res.end();
   }
 
   if (url === "/message" && method === "POST") {
     fs.writeFileSync("message.txt", "TEST TEXT");
-    res.status = 302;
-    res.setHeader("Location", "/");
+    res.writeHead(302, { Location: "/" });
+
     return res.end();
   }
 
