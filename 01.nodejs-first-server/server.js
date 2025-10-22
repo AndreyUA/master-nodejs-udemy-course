@@ -27,10 +27,11 @@ const reqListener = (req, res) => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split("=")?.[1] ?? "";
 
-      fs.writeFileSync("message.txt", message);
-      res.writeHead(302, { Location: "/" });
+      fs.writeFile("message.txt", message, (_err) => {
+        res.writeHead(302, { Location: "/" });
 
-      return res.end();
+        return res.end();
+      });
     });
   }
 
