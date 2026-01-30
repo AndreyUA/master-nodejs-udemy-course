@@ -13,8 +13,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   console.log("we are in the 2nd middleware!");
 
-  // TODO: this won't allow request to "move further"
-  //   next();
+  res.send("<p>hello from Express</p>");
 });
 
 const server = http.createServer(app);
