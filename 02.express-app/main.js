@@ -14,7 +14,7 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 app.use("/", (_req, res, _next) => {
-  res.sendFile(path.join(__dirname, "/views/not-found.html"));
+  res.status(404).sendFile(path.join(__dirname, "/views/not-found.html"));
 });
 
 app.listen(3_000);
